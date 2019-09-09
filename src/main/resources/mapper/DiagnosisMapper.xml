@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.DiagnosisMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.Diagnosis">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="med_rec_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="regis_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="disease_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="diagnosis_type" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="ill_date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="diagnosis_state" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, med_rec_id, regis_id, disease_id, diagnosis_type, ill_date, diagnosis_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from diagnosis
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from diagnosis
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.Diagnosis">
+    insert into diagnosis (id, med_rec_id, regis_id, 
+      disease_id, diagnosis_type, ill_date, 
+      diagnosis_state)
+    values (#{id,jdbcType=INTEGER}, #{medRecId,jdbcType=INTEGER}, #{regisId,jdbcType=INTEGER}, 
+      #{diseaseId,jdbcType=INTEGER}, #{diagnosisType,jdbcType=BIT}, #{illDate,jdbcType=DATE}, 
+      #{diagnosisState,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.Diagnosis">
+    insert into diagnosis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="medRecId != null">
+        med_rec_id,
+      </if>
+      <if test="regisId != null">
+        regis_id,
+      </if>
+      <if test="diseaseId != null">
+        disease_id,
+      </if>
+      <if test="diagnosisType != null">
+        diagnosis_type,
+      </if>
+      <if test="illDate != null">
+        ill_date,
+      </if>
+      <if test="diagnosisState != null">
+        diagnosis_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="medRecId != null">
+        #{medRecId,jdbcType=INTEGER},
+      </if>
+      <if test="regisId != null">
+        #{regisId,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseId != null">
+        #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="diagnosisType != null">
+        #{diagnosisType,jdbcType=BIT},
+      </if>
+      <if test="illDate != null">
+        #{illDate,jdbcType=DATE},
+      </if>
+      <if test="diagnosisState != null">
+        #{diagnosisState,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.Diagnosis">
+    update diagnosis
+    <set>
+      <if test="medRecId != null">
+        med_rec_id = #{medRecId,jdbcType=INTEGER},
+      </if>
+      <if test="regisId != null">
+        regis_id = #{regisId,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseId != null">
+        disease_id = #{diseaseId,jdbcType=INTEGER},
+      </if>
+      <if test="diagnosisType != null">
+        diagnosis_type = #{diagnosisType,jdbcType=BIT},
+      </if>
+      <if test="illDate != null">
+        ill_date = #{illDate,jdbcType=DATE},
+      </if>
+      <if test="diagnosisState != null">
+        diagnosis_state = #{diagnosisState,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.Diagnosis">
+    update diagnosis
+    set med_rec_id = #{medRecId,jdbcType=INTEGER},
+      regis_id = #{regisId,jdbcType=INTEGER},
+      disease_id = #{diseaseId,jdbcType=INTEGER},
+      diagnosis_type = #{diagnosisType,jdbcType=BIT},
+      ill_date = #{illDate,jdbcType=DATE},
+      diagnosis_state = #{diagnosisState,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.MedicineMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.Medicine">
+    <constructor>
+      <idArg column="medicine_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="medicine_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="medicine_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="specification" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="unit" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="manufacturer" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="dosage_form" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="medicine_type" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    medicine_id, medicine_code, medicine_name, specification, unit, manufacturer, dosage_form, 
+    medicine_type, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicine
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.Medicine">
+    insert into medicine (medicine_id, medicine_code, medicine_name, 
+      specification, unit, manufacturer, 
+      dosage_form, medicine_type, price
+      )
+    values (#{medicineId,jdbcType=INTEGER}, #{medicineCode,jdbcType=VARCHAR}, #{medicineName,jdbcType=VARCHAR}, 
+      #{specification,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{manufacturer,jdbcType=VARCHAR}, 
+      #{dosageForm,jdbcType=VARCHAR}, #{medicineType,jdbcType=SMALLINT}, #{price,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.Medicine">
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="medicineId != null">
+        medicine_id,
+      </if>
+      <if test="medicineCode != null">
+        medicine_code,
+      </if>
+      <if test="medicineName != null">
+        medicine_name,
+      </if>
+      <if test="specification != null">
+        specification,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="manufacturer != null">
+        manufacturer,
+      </if>
+      <if test="dosageForm != null">
+        dosage_form,
+      </if>
+      <if test="medicineType != null">
+        medicine_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="medicineId != null">
+        #{medicineId,jdbcType=INTEGER},
+      </if>
+      <if test="medicineCode != null">
+        #{medicineCode,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineName != null">
+        #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineType != null">
+        #{medicineType,jdbcType=SMALLINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.Medicine">
+    update medicine
+    <set>
+      <if test="medicineCode != null">
+        medicine_code = #{medicineCode,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineName != null">
+        medicine_name = #{medicineName,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineType != null">
+        medicine_type = #{medicineType,jdbcType=SMALLINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.Medicine">
+    update medicine
+    set medicine_code = #{medicineCode,jdbcType=VARCHAR},
+      medicine_name = #{medicineName,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      medicine_type = #{medicineType,jdbcType=SMALLINT},
+      price = #{price,jdbcType=DECIMAL}
+    where medicine_id = #{medicineId,jdbcType=INTEGER}
+  </update>
+</mapper>

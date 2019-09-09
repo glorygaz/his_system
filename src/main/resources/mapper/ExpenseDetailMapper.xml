@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.ExpenseDetailMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.ExpenseDetail">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="regis_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="invoice_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="item_type" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="item_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pay_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="manu_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="toll_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, regis_id, invoice_id, item_id, item_type, item_name, item_price, num, pay_time, 
+    manu_id, toll_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from expense_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from expense_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.ExpenseDetail">
+    insert into expense_detail (id, regis_id, invoice_id, 
+      item_id, item_type, item_name, 
+      item_price, num, pay_time, 
+      manu_id, toll_by)
+    values (#{id,jdbcType=INTEGER}, #{regisId,jdbcType=INTEGER}, #{invoiceId,jdbcType=BIGINT}, 
+      #{itemId,jdbcType=INTEGER}, #{itemType,jdbcType=BIT}, #{itemName,jdbcType=VARCHAR}, 
+      #{itemPrice,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{manuId,jdbcType=INTEGER}, #{tollBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.ExpenseDetail">
+    insert into expense_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="regisId != null">
+        regis_id,
+      </if>
+      <if test="invoiceId != null">
+        invoice_id,
+      </if>
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="itemType != null">
+        item_type,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+      <if test="itemPrice != null">
+        item_price,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="manuId != null">
+        manu_id,
+      </if>
+      <if test="tollBy != null">
+        toll_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="regisId != null">
+        #{regisId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceId != null">
+        #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="itemType != null">
+        #{itemType,jdbcType=BIT},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPrice != null">
+        #{itemPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manuId != null">
+        #{manuId,jdbcType=INTEGER},
+      </if>
+      <if test="tollBy != null">
+        #{tollBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.ExpenseDetail">
+    update expense_detail
+    <set>
+      <if test="regisId != null">
+        regis_id = #{regisId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceId != null">
+        invoice_id = #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="itemId != null">
+        item_id = #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="itemType != null">
+        item_type = #{itemType,jdbcType=BIT},
+      </if>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPrice != null">
+        item_price = #{itemPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manuId != null">
+        manu_id = #{manuId,jdbcType=INTEGER},
+      </if>
+      <if test="tollBy != null">
+        toll_by = #{tollBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.ExpenseDetail">
+    update expense_detail
+    set regis_id = #{regisId,jdbcType=INTEGER},
+      invoice_id = #{invoiceId,jdbcType=BIGINT},
+      item_id = #{itemId,jdbcType=INTEGER},
+      item_type = #{itemType,jdbcType=BIT},
+      item_name = #{itemName,jdbcType=VARCHAR},
+      item_price = #{itemPrice,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      manu_id = #{manuId,jdbcType=INTEGER},
+      toll_by = #{tollBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

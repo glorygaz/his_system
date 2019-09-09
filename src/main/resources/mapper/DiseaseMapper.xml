@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.DiseaseMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.Disease">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="disease_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="disease_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="disease_class_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, disease_name, disease_code, disease_class_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from disease
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from disease
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.Disease">
+    insert into disease (id, disease_name, disease_code, 
+      disease_class_id)
+    values (#{id,jdbcType=INTEGER}, #{diseaseName,jdbcType=VARCHAR}, #{diseaseCode,jdbcType=VARCHAR}, 
+      #{diseaseClassId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.Disease">
+    insert into disease
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="diseaseName != null">
+        disease_name,
+      </if>
+      <if test="diseaseCode != null">
+        disease_code,
+      </if>
+      <if test="diseaseClassId != null">
+        disease_class_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="diseaseName != null">
+        #{diseaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseCode != null">
+        #{diseaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseClassId != null">
+        #{diseaseClassId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.Disease">
+    update disease
+    <set>
+      <if test="diseaseName != null">
+        disease_name = #{diseaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseCode != null">
+        disease_code = #{diseaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="diseaseClassId != null">
+        disease_class_id = #{diseaseClassId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.Disease">
+    update disease
+    set disease_name = #{diseaseName,jdbcType=VARCHAR},
+      disease_code = #{diseaseCode,jdbcType=VARCHAR},
+      disease_class_id = #{diseaseClassId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

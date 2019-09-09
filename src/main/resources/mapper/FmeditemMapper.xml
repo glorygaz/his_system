@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.FmeditemMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.Fmeditem">
+    <constructor>
+      <idArg column="item_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="item_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="format" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="exp_class_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="dept_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="mnemonic_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="record_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, item_code, item_name, item_type, format, price, exp_class_id, dept_id, mnemonic_code, 
+    record_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fmeditem
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fmeditem
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.Fmeditem">
+    insert into fmeditem (item_id, item_code, item_name, 
+      item_type, format, price, 
+      exp_class_id, dept_id, mnemonic_code, 
+      record_type)
+    values (#{itemId,jdbcType=INTEGER}, #{itemCode,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{itemType,jdbcType=INTEGER}, #{format,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{expClassId,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{mnemonicCode,jdbcType=VARCHAR}, 
+      #{recordType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.Fmeditem">
+    insert into fmeditem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="itemCode != null">
+        item_code,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+      <if test="itemType != null">
+        item_type,
+      </if>
+      <if test="format != null">
+        format,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="expClassId != null">
+        exp_class_id,
+      </if>
+      <if test="deptId != null">
+        dept_id,
+      </if>
+      <if test="mnemonicCode != null">
+        mnemonic_code,
+      </if>
+      <if test="recordType != null">
+        record_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="itemCode != null">
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null">
+        #{itemType,jdbcType=INTEGER},
+      </if>
+      <if test="format != null">
+        #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="expClassId != null">
+        #{expClassId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="mnemonicCode != null">
+        #{mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null">
+        #{recordType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.Fmeditem">
+    update fmeditem
+    <set>
+      <if test="itemCode != null">
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null">
+        item_type = #{itemType,jdbcType=INTEGER},
+      </if>
+      <if test="format != null">
+        format = #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="expClassId != null">
+        exp_class_id = #{expClassId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null">
+        dept_id = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="mnemonicCode != null">
+        mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null">
+        record_type = #{recordType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.Fmeditem">
+    update fmeditem
+    set item_code = #{itemCode,jdbcType=VARCHAR},
+      item_name = #{itemName,jdbcType=VARCHAR},
+      item_type = #{itemType,jdbcType=INTEGER},
+      format = #{format,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      exp_class_id = #{expClassId,jdbcType=INTEGER},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      mnemonic_code = #{mnemonicCode,jdbcType=VARCHAR},
+      record_type = #{recordType,jdbcType=INTEGER}
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>

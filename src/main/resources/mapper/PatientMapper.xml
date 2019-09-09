@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.PatientMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.Patient">
+    <constructor>
+      <idArg column="medical_record_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="idnum" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="age" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="age_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    medical_record_id, idnum, name, birthday, age, age_type, sex, address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where medical_record_id = #{medicalRecordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from patient
+    where medical_record_id = #{medicalRecordId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.Patient">
+    insert into patient (medical_record_id, idnum, name, 
+      birthday, age, age_type, 
+      sex, address)
+    values (#{medicalRecordId,jdbcType=INTEGER}, #{idnum,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{age,jdbcType=INTEGER}, #{ageType,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=BIT}, #{address,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.Patient">
+    insert into patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="medicalRecordId != null">
+        medical_record_id,
+      </if>
+      <if test="idnum != null">
+        idnum,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="ageType != null">
+        age_type,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="medicalRecordId != null">
+        #{medicalRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="idnum != null">
+        #{idnum,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="ageType != null">
+        #{ageType,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.Patient">
+    update patient
+    <set>
+      <if test="idnum != null">
+        idnum = #{idnum,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="ageType != null">
+        age_type = #{ageType,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where medical_record_id = #{medicalRecordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.Patient">
+    update patient
+    set idnum = #{idnum,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      age = #{age,jdbcType=INTEGER},
+      age_type = #{ageType,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      address = #{address,jdbcType=VARCHAR}
+    where medical_record_id = #{medicalRecordId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getLastKey" resultType="java.lang.Integer">
+    select medical_record_id
+    from patient order by medical_record_id desc limit 1
+  </select>
+
+  <select id="selectByIdAndIdnum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from patient
+    where idnum = #{idnum,jdbcType=CHAR} and medical_record_id = #{medicalRecordId,jdbcType=INTEGER}
+  </select>
+</mapper>

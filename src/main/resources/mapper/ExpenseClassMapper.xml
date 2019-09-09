@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.dao.ExpenseClassMapper">
+  <resultMap id="BaseResultMap" type="com.neu.model.ExpenseClass">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="exp_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="exp_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, exp_code, exp_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from expense_class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from expense_class
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neu.model.ExpenseClass">
+    insert into expense_class (id, exp_code, exp_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{expCode,jdbcType=VARCHAR}, #{expName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neu.model.ExpenseClass">
+    insert into expense_class
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="expCode != null">
+        exp_code,
+      </if>
+      <if test="expName != null">
+        exp_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="expCode != null">
+        #{expCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expName != null">
+        #{expName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neu.model.ExpenseClass">
+    update expense_class
+    <set>
+      <if test="expCode != null">
+        exp_code = #{expCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expName != null">
+        exp_name = #{expName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neu.model.ExpenseClass">
+    update expense_class
+    set exp_code = #{expCode,jdbcType=VARCHAR},
+      exp_name = #{expName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
