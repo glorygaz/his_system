@@ -4,11 +4,13 @@ import com.neu.dao.*;
 import com.neu.dto.DiagnosisPatient;
 import com.neu.dto.RegisCancel;
 import com.neu.dto.Result;
+import com.neu.model.Invoice;
 import com.neu.model.Patient;
 import com.neu.model.Registration;
 import com.neu.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     SettlementCategoryMapper settlementCategoryMapper;
     @Autowired
     PatientMapper patientMapper;
+    @Autowired
+    InvoiceMapper invoiceMapper;
 
     @Override
     public int insert(int medReId,Date regisDate, String noonDistinction, String deptName, String docName, String regisLevel, String settlementType, boolean isMedBook) {
@@ -63,10 +67,12 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    @Transactional
     public Result cancelRegis(int regisId) {
         int state = registrationMapper.selectByPrimaryKey(regisId).getRegisState();
         if(state == 0){
             registrationMapper.updateByPrimaryKeySelective(new Registration(regisId,null,null,null,null,null,null,null,null,null,3));
+            invoiceMapper.insertSelective(new Invoice(invoiceMapper.getLastKey()+1,invoiceMapper.getAmountByRegisId(regisId).negate(),7,new Date(),null,regisId,null,(byte)1));
             return new Result(true,"退号成功");
         }
         if(state == 1)
@@ -78,6 +84,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         if(state == 4)
             return new Result(false,"该挂号已作废，不能退号");
         return new Result(false,"该挂号为未知状态，不能退号");
+    }
+
+    @Override
+    public void updateRegis(Registration registration) {
+        registrationMapper.updateByPrimaryKeySelective(registration);
     }
 
     @Override

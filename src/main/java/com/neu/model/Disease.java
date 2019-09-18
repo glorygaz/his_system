@@ -5,13 +5,16 @@ public class Disease {
 
     private String diseaseName;
 
+    private String diseaseIcd;
+
     private String diseaseCode;
 
     private Integer diseaseClassId;
 
-    public Disease(Integer id, String diseaseName, String diseaseCode, Integer diseaseClassId) {
+    public Disease(Integer id, String diseaseName, String diseaseIcd, String diseaseCode, Integer diseaseClassId) {
         this.id = id;
         this.diseaseName = diseaseName;
+        this.diseaseIcd = diseaseIcd;
         this.diseaseCode = diseaseCode;
         this.diseaseClassId = diseaseClassId;
     }
@@ -34,6 +37,14 @@ public class Disease {
 
     public void setDiseaseName(String diseaseName) {
         this.diseaseName = diseaseName == null ? null : diseaseName.trim();
+    }
+
+    public String getDiseaseIcd() {
+        return diseaseIcd;
+    }
+
+    public void setDiseaseIcd(String diseaseIcd) {
+        this.diseaseIcd = diseaseIcd == null ? null : diseaseIcd.trim();
     }
 
     public String getDiseaseCode() {

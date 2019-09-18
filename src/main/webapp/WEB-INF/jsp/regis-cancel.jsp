@@ -46,17 +46,17 @@
     <div class="row cl">
         <label class="form-label col-xs-1 col-sm-1">姓&emsp;&emsp;名:</label>
         <div class="formControls col-xs-2 col-sm-2">
-            <input type="text" class="input-text radius" value="" placeholder="" id="name" name="name" >
+            <input type="text" class="input-text radius" value="" placeholder="" id="name" name="name" readonly>
         </div>
 
         <label class="form-label col-xs-1 col-sm-1">身份证号:</label>
         <div class="formControls col-xs-2 col-sm-3">
-            <input type="text" class="input-text radius" value="" placeholder="" id="idNum" name="idNum"/>
+            <input type="text" class="input-text radius" value="" placeholder="" id="idNum" name="idNum" readonly/>
         </div>
 
         <label class="form-label col-xs-1 col-sm-1">家庭住址:</label>
         <div class="formControls col-xs-2 col-sm-3">
-            <input type="text" class="input-text radius" value="" placeholder="" id="address" name="address"/>
+            <input type="text" class="input-text radius" value="" placeholder="" id="address" name="address" readonly/>
         </div>
     </div>
     <br/>

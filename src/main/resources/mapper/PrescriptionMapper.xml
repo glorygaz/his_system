@@ -116,4 +116,23 @@
       state = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getLastKey" resultType="java.lang.Integer">
+    select id
+    from prescription order by id desc limit 1
+  </select>
+
+  <select id="selectByRegisId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from prescription
+    where regis_id = #{regisId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByMedRecId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from prescription
+    where med_rec_id = #{medRecId,jdbcType=INTEGER}
+  </select>
 </mapper>

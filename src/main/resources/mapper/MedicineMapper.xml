@@ -141,4 +141,10 @@
       price = #{price,jdbcType=DECIMAL}
     where medicine_id = #{medicineId,jdbcType=INTEGER}
   </update>
+  <select id="selectByDimName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from medicine
+    where medicine_name like concat('%',#{medicineName,jdbcType=VARCHAR},'%')
+  </select>
 </mapper>

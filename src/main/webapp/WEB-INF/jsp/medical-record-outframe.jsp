@@ -55,39 +55,59 @@
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade in active" id="personal" >
                             <p class="inTitle">&ensp;&ensp;未诊患者:</p>
-                            <ul class="list-group" id="patientUndoP" style="overflow-y:auto; height:200px;">
-                                <c:forEach items="${patientPersonalUndo}" var="personalUndo">
-                                    <li class="btn btn-default patientLi"
-                                        onclick="selectPatient(this, ${personalUndo.regisId}, ${personalUndo.medReId}, '${personalUndo.name}', ${personalUndo.age}, '${personalUndo.ageType}', '${personalUndo.sex}', '${personalUndo.regisState}')">
-                                            ${personalUndo.medReId}&emsp;&emsp;${personalUndo.name}&emsp;&emsp;&emsp;${personalUndo.age}${personalUndo.ageType}</li>
-                                </c:forEach>
-                            </ul>
+                            <div style="overflow:auto; height:200px;">
+                                <table class="table table-hover" id="patientUndoP">
+                                    <c:forEach items="${patientPersonalUndo}" var="personalUndo">
+                                        <tr class="patientLi"
+                                            onclick="selectPatient(this, ${personalUndo.regisId}, ${personalUndo.medReId}, '${personalUndo.name}', ${personalUndo.age}, '${personalUndo.ageType}', '${personalUndo.sex}', '${personalUndo.regisState}')">
+                                            <td>${personalUndo.medReId}</td>
+                                            <td>${personalUndo.name}</td>
+                                            <td>${personalUndo.age}${personalUndo.ageType}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
                             <p class="inTitle">&ensp;&ensp;已诊患者:</p>
-                            <ul class="list-group" id="patientDoneP" style="overflow-y:auto; height:200px;">
-                                <c:forEach items="${patientPersonalDone}" var="personalDone">
-                                    <li class="btn btn-default patientLi"
-                                        onclick="selectPatient(this, ${personalDone.regisId}, ${personalDone.medReId}, '${personalDone.name}', ${personalDone.age}, '${personalDone.ageType}', '${personalDone.sex}', '${personalDone.regisState}')">
-                                            ${personalDone.medReId}&emsp;&emsp;${personalDone.name}&emsp;&emsp;&emsp;${personalDone.age}${personalDone.ageType}</li>
-                                </c:forEach>
-                            </ul>
+                            <div style="overflow:auto; height:200px;">
+                                <table class="table table-hover" id="patientDoneP" >
+                                    <c:forEach items="${patientPersonalDone}" var="personalDone">
+                                        <tr class="patientLi"
+                                            onclick="selectPatient(this, ${personalDone.regisId}, ${personalDone.medReId}, '${personalDone.name}', ${personalDone.age}, '${personalDone.ageType}', '${personalDone.sex}', '${personalDone.regisState}')">
+                                            <td>${personalDone.medReId}</td>
+                                            <td>${personalDone.name}</td>
+                                            <td>${personalDone.age}${personalDone.ageType}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="department">
                             <p class="inTitle">&ensp;&ensp;未诊患者:</p>
-                            <ul class="list-group" id="patientUndoD" style="overflow-y:auto; height:200px;">
-                                <c:forEach items="${patientDeptUndo}" var="deptUndo">
-                                    <li class="btn btn-default patientLi"
-                                        onclick="selectPatient(this, ${deptUndo.regisId}, ${deptUndo.medReId}, '${deptUndo.name}', ${deptUndo.age}, '${deptUndo.ageType}', '${deptUndo.sex}', '${deptUndo.regisState}')">
-                                            ${deptUndo.medReId}&emsp;&emsp;${deptUndo.name}&emsp;&emsp;&emsp;${deptUndo.age}${deptUndo.ageType}</li>
-                                </c:forEach>
-                            </ul>
+                            <div style="overflow:auto; height:200px;">
+                                <table class="table table-hover" id="patientUndoD" >
+                                    <c:forEach items="${patientDeptUndo}" var="deptUndo">
+                                        <tr class="patientLi"
+                                            onclick="selectPatient(this, ${deptUndo.regisId}, ${deptUndo.medReId}, '${deptUndo.name}', ${deptUndo.age}, '${deptUndo.ageType}', '${deptUndo.sex}', '${deptUndo.regisState}')">
+                                            <td>${deptUndo.medReId}</td>
+                                            <td>${deptUndo.name}</td>
+                                            <td>${deptUndo.age}${deptUndo.ageType}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
                             <p class="inTitle">&ensp;&ensp;已诊患者:</p>
-                            <ul class="list-group" id="patientDoneD" style="overflow-y:auto; height:200px;">
-                                <c:forEach items="${patientDeptDone}" var="deptDone">
-                                    <li class="btn btn-default patientLi"
-                                        onclick="selectPatient(this, ${deptDone.regisId}, ${deptDone.medReId}, '${deptDone.name}', ${deptDone.age}, '${deptDone.ageType}', '${deptDone.sex}', '${deptDone.regisState}')">
-                                            ${deptDone.medReId}&emsp;&emsp;${deptDone.name}&emsp;&emsp;&emsp;${deptDone.age}${deptDone.ageType}</li>
-                                </c:forEach>
-                            </ul>
+                            <div style="overflow:auto; height:200px;">
+                                <table class="table table-hover" id="patientDoneD">
+                                    <c:forEach items="${patientDeptDone}" var="deptDone">
+                                        <tr class="patientLi"
+                                            onclick="selectPatient(this, ${deptDone.regisId}, ${deptDone.medReId}, '${deptDone.name}', ${deptDone.age}, '${deptDone.ageType}', '${deptDone.sex}', '${deptDone.regisState}')">
+                                            <td>${deptDone.medReId}</td>
+                                            <td>${deptDone.name}</td>&emsp;
+                                            <td>${deptDone.age}${deptDone.ageType}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,11 +132,14 @@
             </div>
             <iframe id="medicalRecordIframe" Name="medicalRecordIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100% height=600px
                     SRC="/medicalRecord">
-
             </iframe>
         </td>
     </tr>
 </table>
+
+<%--隐藏input--%>
+<input type="text" value="" id='patientRegisId' hidden>
+<input type="text" value="" id='patientMedRecId' hidden>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -128,15 +151,21 @@
 <script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript">
     function selectPatient(obj, regisId, medRecId, name, age, ageType, sex, state){
-        $(".patientLi").removeClass("active");
-        $(obj).addClass("active");
+        $(".patientLi").removeClass("info");
+        $(obj).addClass("info");
         $("#name").text(name);
         $("#medReId").text(medRecId);
         $("#age").text(age+ageType);
         $("#sex").text(sex);
         $("#state").text(state);
-        $("#medicalRecordIframe").contents().find("#test").text("adadadada");
+        $("#patientRegisId").val(regisId);
+        $("#patientMedRecId").val(medRecId);
+        $("#medicalRecordIframe")[0].contentWindow.searchDiagnosis(regisId);
 
+        if(state === "诊毕"){
+            $("#medicalRecordIframe")[0].contentWindow.homepageFilled(regisId);
+            $("#medicalRecordIframe")[0].contentWindow.prescriptionFilled(regisId);
+        }
     }
 
     $(document).ready(function () {
@@ -144,65 +173,7 @@
             e.preventDefault();
             $(this).tab('show');
         })
-    })
-
-    // var setting = {
-    //     view: {
-    //         dblClickExpand: false,
-    //         showLine: false,
-    //         selectedMulti: false
-    //     },
-    //     data: {
-    //         simpleData: {
-    //             enable: true,
-    //             idKey: "id",
-    //             pIdKey: "pId",
-    //             rootPId: ""
-    //         }
-    //     },
-    //     callback: {
-    //         beforeClick: function (treeId, treeNode) {
-    //             var zTree = $.fn.zTree.getZTreeObj("tree");
-    //             if (treeNode.isParent) {
-    //                 zTree.expandNode(treeNode);
-    //                 return false;
-    //             } else {
-    //                 demoIframe.attr("src", treeNode.file + ".html");
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    // };
-    //
-    // var zNodes = [
-    //     {id: 1, pId: 0, name: "一级分类", open: true},
-    //     {id: 11, pId: 1, name: "未诊患者", open: true},
-    //     {id: 111, pId: 11, name: "张三", file: "system-base"},
-    //     {id: 112, pId: 11, name: "李四", file: "system-base"},
-    //     {id: 113, pId: 11, name: "王五", file: "system-base"},
-    //     {id: 114, pId: 11, name: "赵六", file: "system-base"},
-    //     {id: 115, pId: 11, name: "耿七", file: "system-base"},
-    //     {id: 12, pId: 1, name: "已诊患者"},
-    //     {id: 121, pId: 12, name: "张龙", file: "system-base"},
-    //     {id: 122, pId: 12, name: "赵虎", file: "system-base"},
-    // ];
-    //
-    // var code;
-    //
-    // function showCode(str) {
-    //     if (!code) code = $("#code");
-    //     code.empty();
-    //     code.append("<li>" + str + "</li>");
-    // }
-    //
-    // $(document).ready(function () {
-    //     var t = $("#treeDemo");
-    //     t = $.fn.zTree.init(t, setting, zNodes);
-    //     demoIframe = $("#testIframe");
-    //     //demoIframe.on("load", loadReady);
-    //     var zTree = $.fn.zTree.getZTreeObj("tree");
-    //     //zTree.selectNode(zTree.getNodeByParam("id",'11'));
-    // });
+    });
 </script>
 </body>
 <style>

@@ -7,7 +7,7 @@ public class PrescriptionItem {
 
     private Integer itemId;
 
-    private String usage;
+    private String prescUsage;
 
     private String dosage;
 
@@ -17,11 +17,11 @@ public class PrescriptionItem {
 
     private Integer state;
 
-    public PrescriptionItem(Integer id, Integer prescId, Integer itemId, String usage, String dosage, String frequency, Integer num, Integer state) {
+    public PrescriptionItem(Integer id, Integer prescId, Integer itemId, String prescUsage, String dosage, String frequency, Integer num, Integer state) {
         this.id = id;
         this.prescId = prescId;
         this.itemId = itemId;
-        this.usage = usage;
+        this.prescUsage = prescUsage;
         this.dosage = dosage;
         this.frequency = frequency;
         this.num = num;
@@ -56,12 +56,12 @@ public class PrescriptionItem {
         this.itemId = itemId;
     }
 
-    public String getUsage() {
-        return usage;
+    public String getPrescUsage() {
+        return prescUsage;
     }
 
-    public void setUsage(String usage) {
-        this.usage = usage == null ? null : usage.trim();
+    public void setPrescUsage(String prescUsage) {
+        this.prescUsage = prescUsage == null ? null : prescUsage.trim();
     }
 
     public String getDosage() {
@@ -94,5 +94,19 @@ public class PrescriptionItem {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "PrescriptionItem{" +
+                "id=" + id +
+                ", prescId=" + prescId +
+                ", itemId=" + itemId +
+                ", prescUsage='" + prescUsage + '\'' +
+                ", dosage='" + dosage + '\'' +
+                ", frequency='" + frequency + '\'' +
+                ", num=" + num +
+                ", state=" + state +
+                '}';
     }
 }

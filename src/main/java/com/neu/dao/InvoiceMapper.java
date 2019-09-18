@@ -2,6 +2,8 @@ package com.neu.dao;
 
 import com.neu.model.Invoice;
 
+import java.math.BigDecimal;
+
 public interface InvoiceMapper {
     int deleteByPrimaryKey(Long invoiceNum);
 
@@ -16,4 +18,6 @@ public interface InvoiceMapper {
     int updateByPrimaryKey(Invoice record);
 
     long getLastKey();
+
+    BigDecimal getAmountByRegisId(int regisId);
 }

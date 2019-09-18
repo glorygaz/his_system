@@ -7,19 +7,17 @@
       <arg column="med_rec_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="regis_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="chief_complaint" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="history_of_present_illness" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="present_ill" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="treatment_of_present_ill" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="previous_history" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="allergic_history" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="health_check" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="inspection_advice" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="attention" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="med_rec_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, med_rec_id, regis_id, chief_complaint, history_of_present_illness, treatment_of_present_ill, 
-    previous_history, allergic_history, health_check, inspection_advice, attention, med_rec_state
+    id, med_rec_id, regis_id, chief_complaint, present_ill, treatment_of_present_ill, 
+    previous_history, allergic_history, health_check, med_rec_state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,15 +31,13 @@
   </delete>
   <insert id="insert" parameterType="com.neu.model.Homepage">
     insert into homepage (id, med_rec_id, regis_id, 
-      chief_complaint, history_of_present_illness, 
-      treatment_of_present_ill, previous_history, 
-      allergic_history, health_check, inspection_advice, 
-      attention, med_rec_state)
+      chief_complaint, present_ill, treatment_of_present_ill, 
+      previous_history, allergic_history, health_check, 
+      med_rec_state)
     values (#{id,jdbcType=INTEGER}, #{medRecId,jdbcType=INTEGER}, #{regisId,jdbcType=INTEGER}, 
-      #{chiefComplaint,jdbcType=VARCHAR}, #{historyOfPresentIllness,jdbcType=VARCHAR}, 
-      #{treatmentOfPresentIll,jdbcType=VARCHAR}, #{previousHistory,jdbcType=VARCHAR}, 
-      #{allergicHistory,jdbcType=VARCHAR}, #{healthCheck,jdbcType=VARCHAR}, #{inspectionAdvice,jdbcType=VARCHAR}, 
-      #{attention,jdbcType=VARCHAR}, #{medRecState,jdbcType=INTEGER})
+      #{chiefComplaint,jdbcType=VARCHAR}, #{presentIll,jdbcType=VARCHAR}, #{treatmentOfPresentIll,jdbcType=VARCHAR}, 
+      #{previousHistory,jdbcType=VARCHAR}, #{allergicHistory,jdbcType=VARCHAR}, #{healthCheck,jdbcType=VARCHAR}, 
+      #{medRecState,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.neu.model.Homepage">
     insert into homepage
@@ -58,8 +54,8 @@
       <if test="chiefComplaint != null">
         chief_complaint,
       </if>
-      <if test="historyOfPresentIllness != null">
-        history_of_present_illness,
+      <if test="presentIll != null">
+        present_ill,
       </if>
       <if test="treatmentOfPresentIll != null">
         treatment_of_present_ill,
@@ -72,12 +68,6 @@
       </if>
       <if test="healthCheck != null">
         health_check,
-      </if>
-      <if test="inspectionAdvice != null">
-        inspection_advice,
-      </if>
-      <if test="attention != null">
-        attention,
       </if>
       <if test="medRecState != null">
         med_rec_state,
@@ -96,8 +86,8 @@
       <if test="chiefComplaint != null">
         #{chiefComplaint,jdbcType=VARCHAR},
       </if>
-      <if test="historyOfPresentIllness != null">
-        #{historyOfPresentIllness,jdbcType=VARCHAR},
+      <if test="presentIll != null">
+        #{presentIll,jdbcType=VARCHAR},
       </if>
       <if test="treatmentOfPresentIll != null">
         #{treatmentOfPresentIll,jdbcType=VARCHAR},
@@ -110,12 +100,6 @@
       </if>
       <if test="healthCheck != null">
         #{healthCheck,jdbcType=VARCHAR},
-      </if>
-      <if test="inspectionAdvice != null">
-        #{inspectionAdvice,jdbcType=VARCHAR},
-      </if>
-      <if test="attention != null">
-        #{attention,jdbcType=VARCHAR},
       </if>
       <if test="medRecState != null">
         #{medRecState,jdbcType=INTEGER},
@@ -134,8 +118,8 @@
       <if test="chiefComplaint != null">
         chief_complaint = #{chiefComplaint,jdbcType=VARCHAR},
       </if>
-      <if test="historyOfPresentIllness != null">
-        history_of_present_illness = #{historyOfPresentIllness,jdbcType=VARCHAR},
+      <if test="presentIll != null">
+        present_ill = #{presentIll,jdbcType=VARCHAR},
       </if>
       <if test="treatmentOfPresentIll != null">
         treatment_of_present_ill = #{treatmentOfPresentIll,jdbcType=VARCHAR},
@@ -149,12 +133,6 @@
       <if test="healthCheck != null">
         health_check = #{healthCheck,jdbcType=VARCHAR},
       </if>
-      <if test="inspectionAdvice != null">
-        inspection_advice = #{inspectionAdvice,jdbcType=VARCHAR},
-      </if>
-      <if test="attention != null">
-        attention = #{attention,jdbcType=VARCHAR},
-      </if>
       <if test="medRecState != null">
         med_rec_state = #{medRecState,jdbcType=INTEGER},
       </if>
@@ -166,14 +144,19 @@
     set med_rec_id = #{medRecId,jdbcType=INTEGER},
       regis_id = #{regisId,jdbcType=INTEGER},
       chief_complaint = #{chiefComplaint,jdbcType=VARCHAR},
-      history_of_present_illness = #{historyOfPresentIllness,jdbcType=VARCHAR},
+      present_ill = #{presentIll,jdbcType=VARCHAR},
       treatment_of_present_ill = #{treatmentOfPresentIll,jdbcType=VARCHAR},
       previous_history = #{previousHistory,jdbcType=VARCHAR},
       allergic_history = #{allergicHistory,jdbcType=VARCHAR},
       health_check = #{healthCheck,jdbcType=VARCHAR},
-      inspection_advice = #{inspectionAdvice,jdbcType=VARCHAR},
-      attention = #{attention,jdbcType=VARCHAR},
       med_rec_state = #{medRecState,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByRegisId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from homepage
+    where regis_id = #{regisId,jdbcType=INTEGER}
+  </select>
 </mapper>

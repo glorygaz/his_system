@@ -55,7 +55,7 @@
                 <ul>
                     <li><a data-href="/member_add" data-title="现场挂号" href="javascript:void(0)">现场挂号</a></li>
                     <li><a data-href="/regisCancel" data-title="退号" href="javascript:void(0)">退号</a></li>
-                    <li><a data-href="article-list.html" data-title="收费" href="javascript:void(0)">收费</a></li>
+                    <li><a data-href="/charge" data-title="收费" href="javascript:void(0)">收费</a></li>
                     <li><a data-href="article-list.html" data-title="退费" href="javascript:void(0)">退费</a></li>
                     <li><a data-href="article-list.html" data-title="发票补打" href="javascript:void(0)">发票补打</a></li>
                     <li><a data-href="article-list.html" data-title="发票重打" href="javascript:void(0)">发票重打</a></li>
@@ -69,7 +69,7 @@
             <dt><i class="Hui-iconfont">&#xe613;</i> 门诊医生<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="/diagnosis" data-title="门诊病历" href="javascript:void(0)">门诊病历</a></li>
+                    <li><a data-href="/medicalRecordOutFrame" data-title="门诊病历" href="javascript:void(0)">门诊病历</a></li>
                     <li><a data-href="product-category.html" data-title="医技模板管理" href="javascript:void(0)">医技模板管理</a></li>
                     <li><a data-href="product-category.html" data-title="西药处方模板" href="javascript:void(0)">西药处方模板</a></li>
                     <li><a data-href="product-category.html" data-title=">中药处方模板" href="javascript:void(0)">中药处方模板</a></li>
@@ -91,7 +91,7 @@
             <dt><i class="Hui-iconfont">&#xe622;</i> 药房管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="article-list.html" data-title="药房发药" href="javascript:;">药房发药</a></li>
+                    <li><a data-href="/dispensing" data-title="药房发药" href="javascript:;">药房发药</a></li>
                     <li><a data-href="article-list.html" data-title="药房退药" href="javascript:void(0)">药房退药</a></li>
                     <li><a data-href="article-list.html" data-title="药品管理" href="javascript:void(0)">药品管理</a></li>
                 </ul>

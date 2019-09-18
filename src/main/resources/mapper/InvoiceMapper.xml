@@ -132,4 +132,9 @@
     select invoice_num
     from invoice order by invoice_num desc limit 1
   </select>
+
+  <select id="getAmountByRegisId" resultType="java.math.BigDecimal">
+    select amount
+    from invoice where regis_id = #{regisId,jdbcType=INTEGER}
+  </select>
 </mapper>

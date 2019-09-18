@@ -9,7 +9,7 @@ public class Homepage {
 
     private String chiefComplaint;
 
-    private String historyOfPresentIllness;
+    private String presentIll;
 
     private String treatmentOfPresentIll;
 
@@ -19,24 +19,18 @@ public class Homepage {
 
     private String healthCheck;
 
-    private String inspectionAdvice;
-
-    private String attention;
-
     private Integer medRecState;
 
-    public Homepage(Integer id, Integer medRecId, Integer regisId, String chiefComplaint, String historyOfPresentIllness, String treatmentOfPresentIll, String previousHistory, String allergicHistory, String healthCheck, String inspectionAdvice, String attention, Integer medRecState) {
+    public Homepage(Integer id, Integer medRecId, Integer regisId, String chiefComplaint, String presentIll, String treatmentOfPresentIll, String previousHistory, String allergicHistory, String healthCheck, Integer medRecState) {
         this.id = id;
         this.medRecId = medRecId;
         this.regisId = regisId;
         this.chiefComplaint = chiefComplaint;
-        this.historyOfPresentIllness = historyOfPresentIllness;
+        this.presentIll = presentIll;
         this.treatmentOfPresentIll = treatmentOfPresentIll;
         this.previousHistory = previousHistory;
         this.allergicHistory = allergicHistory;
         this.healthCheck = healthCheck;
-        this.inspectionAdvice = inspectionAdvice;
-        this.attention = attention;
         this.medRecState = medRecState;
     }
 
@@ -76,12 +70,12 @@ public class Homepage {
         this.chiefComplaint = chiefComplaint == null ? null : chiefComplaint.trim();
     }
 
-    public String getHistoryOfPresentIllness() {
-        return historyOfPresentIllness;
+    public String getPresentIll() {
+        return presentIll;
     }
 
-    public void setHistoryOfPresentIllness(String historyOfPresentIllness) {
-        this.historyOfPresentIllness = historyOfPresentIllness == null ? null : historyOfPresentIllness.trim();
+    public void setPresentIll(String presentIll) {
+        this.presentIll = presentIll == null ? null : presentIll.trim();
     }
 
     public String getTreatmentOfPresentIll() {
@@ -114,22 +108,6 @@ public class Homepage {
 
     public void setHealthCheck(String healthCheck) {
         this.healthCheck = healthCheck == null ? null : healthCheck.trim();
-    }
-
-    public String getInspectionAdvice() {
-        return inspectionAdvice;
-    }
-
-    public void setInspectionAdvice(String inspectionAdvice) {
-        this.inspectionAdvice = inspectionAdvice == null ? null : inspectionAdvice.trim();
-    }
-
-    public String getAttention() {
-        return attention;
-    }
-
-    public void setAttention(String attention) {
-        this.attention = attention == null ? null : attention.trim();
     }
 
     public Integer getMedRecState() {

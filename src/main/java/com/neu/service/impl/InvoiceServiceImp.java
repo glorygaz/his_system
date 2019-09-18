@@ -32,6 +32,16 @@ public class InvoiceServiceImp implements InvoiceService {
         }
     }
 
+    @Override
+    public boolean insert(Invoice invoice) {
+        if(invoice.getInvoiceNum() == (getLastKey()+1)){
+            invoiceMapper.insertSelective(invoice);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 //    private int tollByTrans(String tollBy){
 //        if(tollBy.equals("现金"))
 //            return 51;

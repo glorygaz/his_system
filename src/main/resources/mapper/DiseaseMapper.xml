@@ -5,12 +5,13 @@
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="disease_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="disease_icd" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="disease_code" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="disease_class_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, disease_name, disease_code, disease_class_id
+    id, disease_name, disease_icd, disease_code, disease_class_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,10 +24,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.neu.model.Disease">
-    insert into disease (id, disease_name, disease_code, 
-      disease_class_id)
-    values (#{id,jdbcType=INTEGER}, #{diseaseName,jdbcType=VARCHAR}, #{diseaseCode,jdbcType=VARCHAR}, 
-      #{diseaseClassId,jdbcType=INTEGER})
+    insert into disease (id, disease_name, disease_icd, 
+      disease_code, disease_class_id)
+    values (#{id,jdbcType=INTEGER}, #{diseaseName,jdbcType=VARCHAR}, #{diseaseIcd,jdbcType=VARCHAR}, 
+      #{diseaseCode,jdbcType=VARCHAR}, #{diseaseClassId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.neu.model.Disease">
     insert into disease
@@ -36,6 +37,9 @@
       </if>
       <if test="diseaseName != null">
         disease_name,
+      </if>
+      <if test="diseaseIcd != null">
+        disease_icd,
       </if>
       <if test="diseaseCode != null">
         disease_code,
@@ -51,6 +55,9 @@
       <if test="diseaseName != null">
         #{diseaseName,jdbcType=VARCHAR},
       </if>
+      <if test="diseaseIcd != null">
+        #{diseaseIcd,jdbcType=VARCHAR},
+      </if>
       <if test="diseaseCode != null">
         #{diseaseCode,jdbcType=VARCHAR},
       </if>
@@ -65,6 +72,9 @@
       <if test="diseaseName != null">
         disease_name = #{diseaseName,jdbcType=VARCHAR},
       </if>
+      <if test="diseaseIcd != null">
+        disease_icd = #{diseaseIcd,jdbcType=VARCHAR},
+      </if>
       <if test="diseaseCode != null">
         disease_code = #{diseaseCode,jdbcType=VARCHAR},
       </if>
@@ -77,8 +87,16 @@
   <update id="updateByPrimaryKey" parameterType="com.neu.model.Disease">
     update disease
     set disease_name = #{diseaseName,jdbcType=VARCHAR},
+      disease_icd = #{diseaseIcd,jdbcType=VARCHAR},
       disease_code = #{diseaseCode,jdbcType=VARCHAR},
       disease_class_id = #{diseaseClassId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByDimName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from disease
+    where disease_name like concat('%',#{diseaseName,jdbcType=VARCHAR},'%')
+  </select>
 </mapper>

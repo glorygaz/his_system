@@ -14,4 +14,6 @@ public interface HomepageMapper {
     int updateByPrimaryKeySelective(Homepage record);
 
     int updateByPrimaryKey(Homepage record);
+
+    Homepage selectByRegisId(int regisId);
 }

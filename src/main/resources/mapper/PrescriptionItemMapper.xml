@@ -6,7 +6,7 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="presc_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="item_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="usage" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="presc_usage" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="dosage" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="frequency" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="num" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -14,7 +14,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, presc_id, item_id, usage, dosage, frequency, num, state
+    id, presc_id, item_id, presc_usage, dosage, frequency, num, state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -28,10 +28,10 @@
   </delete>
   <insert id="insert" parameterType="com.neu.model.PrescriptionItem">
     insert into prescription_item (id, presc_id, item_id, 
-      usage, dosage, frequency, 
+      presc_usage, dosage, frequency, 
       num, state)
     values (#{id,jdbcType=INTEGER}, #{prescId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
-      #{usage,jdbcType=VARCHAR}, #{dosage,jdbcType=VARCHAR}, #{frequency,jdbcType=VARCHAR}, 
+      #{prescUsage,jdbcType=VARCHAR}, #{dosage,jdbcType=VARCHAR}, #{frequency,jdbcType=VARCHAR}, 
       #{num,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.neu.model.PrescriptionItem">
@@ -46,8 +46,8 @@
       <if test="itemId != null">
         item_id,
       </if>
-      <if test="usage != null">
-        usage,
+      <if test="prescUsage != null">
+        presc_usage,
       </if>
       <if test="dosage != null">
         dosage,
@@ -72,8 +72,8 @@
       <if test="itemId != null">
         #{itemId,jdbcType=INTEGER},
       </if>
-      <if test="usage != null">
-        #{usage,jdbcType=VARCHAR},
+      <if test="prescUsage != null">
+        #{prescUsage,jdbcType=VARCHAR},
       </if>
       <if test="dosage != null">
         #{dosage,jdbcType=VARCHAR},
@@ -98,8 +98,8 @@
       <if test="itemId != null">
         item_id = #{itemId,jdbcType=INTEGER},
       </if>
-      <if test="usage != null">
-        usage = #{usage,jdbcType=VARCHAR},
+      <if test="prescUsage != null">
+        presc_usage = #{prescUsage,jdbcType=VARCHAR},
       </if>
       <if test="dosage != null">
         dosage = #{dosage,jdbcType=VARCHAR},
@@ -120,11 +120,18 @@
     update prescription_item
     set presc_id = #{prescId,jdbcType=INTEGER},
       item_id = #{itemId,jdbcType=INTEGER},
-      usage = #{usage,jdbcType=VARCHAR},
+      presc_usage = #{prescUsage,jdbcType=VARCHAR},
       dosage = #{dosage,jdbcType=VARCHAR},
       frequency = #{frequency,jdbcType=VARCHAR},
       num = #{num,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByPrescId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from prescription_item
+    where presc_id = #{prescId,jdbcType=INTEGER}
+  </select>
 </mapper>

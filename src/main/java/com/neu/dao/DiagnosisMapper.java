@@ -2,6 +2,8 @@ package com.neu.dao;
 
 import com.neu.model.Diagnosis;
 
+import java.util.List;
+
 public interface DiagnosisMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface DiagnosisMapper {
     int updateByPrimaryKeySelective(Diagnosis record);
 
     int updateByPrimaryKey(Diagnosis record);
+
+    List<Diagnosis> selectByRegisId(int regisId);
 }

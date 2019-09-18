@@ -2,6 +2,8 @@ package com.neu.dao;
 
 import com.neu.model.Medicine;
 
+import java.util.List;
+
 public interface MedicineMapper {
     int deleteByPrimaryKey(Integer medicineId);
 
@@ -14,4 +16,6 @@ public interface MedicineMapper {
     int updateByPrimaryKeySelective(Medicine record);
 
     int updateByPrimaryKey(Medicine record);
+
+    List<Medicine> selectByDimName(String medicineName);
 }
