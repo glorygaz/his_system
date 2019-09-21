@@ -332,7 +332,7 @@
 			getAmount();
 		});
 
-		$("#birthday").change(function () {
+		$("#birthday").blur(function () {
 			getAge();
 		});
 

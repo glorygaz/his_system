@@ -210,6 +210,7 @@
                             <table class="table table-hover" id="prescription" >
                                 <thead>
                                 <tr>
+                                    <th><input type="checkbox" class="checkbox" id="prescGrossCheck"/></th>
                                     <th>名称</th>
                                     <th>状态</th>
                                 </tr>
@@ -689,6 +690,7 @@
                 success: function (result) {
                     if(result.success){
                         layer.msg(result.error,{icon:1,time:1250});
+                        window.parent.location.replace(window.parent.location.href);
                     }else{
                         layer.msg(result.error,{icon:2,time:1250});
                     }
@@ -784,7 +786,7 @@
         return totalCost;
     }
 
-    //全选
+    //处方明细全选
     $(function(){
         $("#prescItemGrossCheck").click(function () {
             var b = $('#prescriptionItems tbody[hidden!="hidden"] tr input[type="checkbox"]');
@@ -797,7 +799,7 @@
         });
     });
 
-    //删除多行
+    //处方明细删除多行
     function delPrescItem() {
         var a = $("#prescriptionItems tbody tr input[type=\"checkbox\"]:checked");
         if(a.length == 0){
@@ -812,7 +814,19 @@
             layer.closeAll('dialog');
         });
     }
-    
+
+    // 处方全选
+    $(function(){
+        $("#prescGrossCheck").click(function () {
+            var b = $('#prescription tbody tr input[type="checkbox"]');
+            if ($(this).prop('checked')) {
+                b.prop('checked', true);
+            } else {
+                b.prop('checked', false);
+            }
+        });
+    });
+
     // 增方
     function addPrescription() {
         $("#addPrescriptionModal").modal();
@@ -825,6 +839,7 @@
         }
         $("#prescription tbody").append(
             "<tr onclick=\"choosePresc(this)\">\n" +
+            "     <td class='prescCheck'><input type='checkbox' class='checkbox'/></td>\n" +
             "     <td class='prescName'>"+ name +"</td>\n" +
             "     <td class='prescState'>"+ "暂存" +"</td>\n" +
             "</tr>"
@@ -838,15 +853,24 @@
 
     // 删方
     function delPrescription() {
-        var index = $("#chosenPrescIndex").val();
-        if(index == ""){
+        var a = $("#prescription tbody tr input[type=\"checkbox\"]:checked");
+        if(a.length == 0){
             return;
         }
+
+        // var index = $("#chosenPrescIndex").val();
+        // if(index == ""){
+        //     return;
+        // }
         layer.confirm('确认要删除吗？',function(){
-            $("#prescription tbody").find("tr:eq("+ index +")").remove();
-            $("#prescriptionItems").find("tbody:eq("+ index +")").remove();
+            a.each(function() { // 遍历选中的checkbox
+                var n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+                $("#prescription tbody").find("tr:eq("+n+")").remove();
+                // $("#prescription tbody").find("tr:eq("+ index +")").remove();
+                $("#prescriptionItems").find("tbody:eq("+ n +")").remove();
+            });
             layer.closeAll('dialog');
-            $("#chosenPrescIndex").val("");
+            // $("#chosenPrescIndex").val("");
         });
     }
 
@@ -981,32 +1005,44 @@
             return;
         }
 
+        var check = $("#prescription tbody tr input[type=\"checkbox\"]:checked");
+        if(check.length == 0){
+            layer.msg("未选择处方",{icon:2,time:1250});
+            return;
+        }
+
         layer.confirm('确认要提交吗？',function(){
 
-            var index = 0;
+            // var index = 0;
 
-            $("#prescription tbody tr").each(function() {
+            check.each(function() {
+                var tr = $(this).parents("tr");
 
-                var prescName = $(this).find('.prescName').text();
-                var state = $(this).find('.prescState').text();
+                var n = tr.index();
+
+
+                var prescName = tr.find('.prescName').text();
+                var state = tr.find('.prescState').text();
                 var prescId = null;
                 var prescItemsList = [];
 
                 if(state == "已开立"){
-                    index = index + 1;
+                    // index = index + 1;
                     return;
                 }
+
+                var docId = window.parent.$("#userId").val();
 
                 $.ajax({
                     type: "POST",
                     url: "/openPrescription",
                     async: false,
                     dataType: 'JSON',
-                    data: {medRecId:medRecId, regisId:regisId, prescName:prescName},
+                    data: {medRecId:medRecId, regisId:regisId, prescName:prescName, docId:docId},
                     success: function (result) {
                         if(result.success){
                             prescId = result.data;
-                            $("#prescriptionItems").find("tbody:eq("+index+")").find("tr").each(function () {
+                            $("#prescriptionItems").find("tbody:eq("+n+")").find("tr").each(function () {
                                 var prescriptionItem = {};
                                 prescriptionItem.prescId = prescId;
                                 prescriptionItem.itemId = $(this).find('.medId').text();
@@ -1039,12 +1075,10 @@
                         }
                     }
                 });
-
-
-                index = index + 1;
+                // index = index + 1;
+                tr.find('td.prescState').text("已开立");
             });
 
-            $("#prescription tbody tr td.prescState").text("已开立");
             layer.closeAll('dialog');
             layer.msg("开立成功",{icon:1,time:1250});
         });
@@ -1065,6 +1099,7 @@
                     for (var i in result.data) {
                         $("#prescription tbody").append(
                             "<tr onclick=\"choosePresc(this)\">\n" +
+                            "     <td class='prescCheck'><input type='checkbox' class='checkbox'/></td>\n" +
                             "     <td class='prescName'>"+ result.data[i].prescName +"</td>\n" +
                             "     <td class='prescState'>"+ "已开立" +"</td>\n" +
                             "</tr>"

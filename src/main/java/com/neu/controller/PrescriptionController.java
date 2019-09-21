@@ -1,6 +1,5 @@
 package com.neu.controller;
 
-import com.neu.dao.PrescriptionMapper;
 import com.neu.dto.PrescIdAndName;
 import com.neu.dto.PrescriptionItemWithMed;
 import com.neu.dto.Result;
@@ -56,8 +55,9 @@ public class PrescriptionController {
     @ResponseBody
     private Result openPrescription(@RequestParam("medRecId") int medRecId,
                                     @RequestParam("regisId") int regisId,
-                                    @RequestParam("prescName")String prescName){
-        prescriptionService.openPrescription(new Prescription(null, medRecId, regisId, null, prescName, new Date(), 1));
+                                    @RequestParam("prescName")String prescName,
+                                    @RequestParam("docId")int docId){
+        prescriptionService.openPrescription(new Prescription(null, medRecId, regisId, docId, prescName, new Date(), 1));
         return new Result<>(true, prescriptionService.getLastestId());
     }
 

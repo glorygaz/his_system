@@ -30,7 +30,7 @@
     insert into prescription_item (id, presc_id, item_id, 
       presc_usage, dosage, frequency, 
       num, state)
-    values (#{id,jdbcType=INTEGER}, #{prescId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{prescId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER},
       #{prescUsage,jdbcType=VARCHAR}, #{dosage,jdbcType=VARCHAR}, #{frequency,jdbcType=VARCHAR}, 
       #{num,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
   </insert>

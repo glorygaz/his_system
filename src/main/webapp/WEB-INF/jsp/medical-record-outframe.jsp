@@ -140,6 +140,7 @@
 <%--隐藏input--%>
 <input type="text" value="" id='patientRegisId' hidden>
 <input type="text" value="" id='patientMedRecId' hidden>
+<input type="text" id='userId' value="${UserId}" hidden>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
@@ -150,6 +151,7 @@
 <!--使用ztree插件，也可以自行选择其他插件显示 -->
 <script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript">
+
     function selectPatient(obj, regisId, medRecId, name, age, ageType, sex, state){
         $(".patientLi").removeClass("info");
         $(obj).addClass("info");
@@ -172,7 +174,7 @@
         $('#myTab a').click(function (e) {
             e.preventDefault();
             $(this).tab('show');
-        })
+        });
     });
 </script>
 </body>

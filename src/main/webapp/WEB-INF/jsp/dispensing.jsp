@@ -36,15 +36,15 @@
             <input type="text" class="input-text radius" value="" placeholder="" id="medicalRecordId" name="medicalRecordId" >
         </div>
         <div class="formControls col-xs-2 col-sm-2">
-            <button id="searchBtn" class="btn btn-primary radius" type="button" onclick="searchExpenseList()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button id="searchBtn" class="btn btn-primary radius" type="button" onclick="searchDispensingList()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
         </div>
         <div class="formControls col-xs-3 col-sm-3">
-            <button id="chargeBtn" class="btn btn-primary radius" type="button" onclick="chargeModal()"><i class="Hui-iconfont">&#xe6b5;</i> 收费结算</button>
+            <button id="chargeBtn" class="btn btn-primary radius" type="button" onclick="dispensing()"><i class="Hui-iconfont">&#xe600;</i> 发药</button>
         </div>
     </div>
     <br/>
     <div class="row cl">
-        <label class="form-label col-xs-3 col-sm-3" style="font-weight: bold">患者挂号信息确认</label>
+        <label class="form-label col-xs-3 col-sm-3" style="font-weight: bold">患者信息确认</label>
         <label class="form-label col-xs-9 col-sm-9"></label>
     </div>
     <div class="row cl">
@@ -65,20 +65,21 @@
     </div>
     <br/>
     <div class="row cl">
-        <label class="form-label col-xs-2 col-sm-2" style="font-weight: bold">患者消费信息</label>
+        <label class="form-label col-xs-2 col-sm-2" style="font-weight: bold">患者处方信息</label>
         <label class="form-label col-xs-10 col-sm-10"></label>
     </div>
     <div class="mt-20">
-        <table class="table table-bg table-hover table-sort table-responsive" id="expenseTable">
+        <table class="table table-bg table-hover table-sort table-responsive" id="dispensingTable">
             <thead>
             <tr class="text-c">
                 <th><input type="checkbox" class="checkbox" id="itemGrossCheck"/></th>
-                <th>所属挂号编号</th>
-                <th>项目名称</th>
+                <th>药品名称</th>
                 <th>单价</th>
+                <th>规格</th>
+                <th>制造商</th>
                 <th>数量</th>
+                <th>处方名称</th>
                 <th>开立时间</th>
-                <th>状态</th>
             </tr>
             </thead>
             <tbody id="tbody">
@@ -88,7 +89,6 @@
 </div>
 
 <%--隐藏input--%>
-<input type="text" value="" id='searchedMedRecId' hidden>
 
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
@@ -103,46 +103,50 @@
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     $('.table-sort').dataTable({
-        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "aaSorting": [[ 7, "desc" ]],//默认第几个排序
         "bStateSave": false,//状态保存
         "pading":false,
         "aoColumnDefs": [
             //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-            {"orderable":false,"aTargets":[0,2,6]}// 不参与排序的列
+            {"orderable":false,"aTargets":[0,1,3,4,6]}// 不参与排序的列
         ]
     });
 
 
-    //查询未缴费项目
-    function searchExpenseList() {
+    //查询未发药项目
+    function searchDispensingList() {
         var medRecId = $("#medicalRecordId").val();
         if(medRecId == ""){
             layer.msg('病历号不能为空',{icon:2,time:1250});
             return;
         }
         // $("#tbody").empty();
-        var table = $("#expenseTable").DataTable();
+        var table = $("#dispensingTable").DataTable();
         table.clear();
         $.ajax({
             type: "GET",
-            url: "/getExpenseList?medicalRecordId="+medRecId,
+            url: "/getDispensingList?medicalRecordId="+medRecId,
             dataType: "JSON",
             success: function (data) {
                 if(data.success){
-                    $("#searchedMedRecId").val(medRecId);
+                    if(data.data[0] == null){
+                        table.draw();
+                        return;
+                    }
                     $("#name").val(data.data[0].name);
                     $("#idNum").val(data.data[0].idNum);
                     $("#address").val(data.data[0].address);
                     for (var i in data.data) {
                         table.row.add([
-                            "<input id='"+ data.data[i].itemId +"' value='"+data.data[i].prescItemId+"' name='expCheck' type='checkbox' class='checkbox'/>",
-                            data.data[i].regisId,
-                            data.data[i].itemName,
+                            "<input value='"+data.data[i].prescItemId+"' name='disCheck' type='checkbox' class='checkbox'/>",
+                            data.data[i].medicineName,
                             data.data[i].price,
+                            data.data[i].spec,
+                            data.data[i].manufactor,
                             data.data[i].num,
-                            data.data[i].openTime,
-                            "<span class='label label-success radius'>已开立</span>"
-                        ])
+                            data.data[i].prescName,
+                            data.data[i].openTime
+                        ]);
                     }
                     table.draw();
                 }else{
@@ -155,98 +159,39 @@
         })
     }
 
-    //交费
-    function charge() {
-        var tollBy = $('#tollBy').val();
-        var received = $('#received').val();
-        var invoiceNum = $('#invoiceNum').val();
-        if(tollBy == ""){
-            layer.msg("请选择支付方式",{icon:2,time:1250});
+    //发药
+    function dispensing() {
+        var dataTable = $('#dispensingTable').DataTable();
+        var info = dataTable.page.info();
+        var length = info.recordsDisplay;
+        var check = $("input[name='disCheck']:checked");
+        if (length === 0){
+            layer.msg("没有数据",{icon:2,time:1250});
             return;
         }
-        if(received == ""){
-            layer.msg("请输入实收金额",{icon:2,time:1250});
+
+        if (check[0] == null) {
+            layer.msg("请选择要发药的项目",{icon:2,time:1250});
             return;
         }
-        if(invoiceNum == ""){
-            layer.msg("请输入发票号",{icon:2,time:1250});
-            return;
-        }
-        var expenseDetailList = [];
-        var prescItemList = [];
-        var regisId = null;
-        var check = $("input[name='expCheck']:checked");
+
+        var prescItemIdList = [];
         check.each(function () {
-            var row = $(this).parent("td").parent("tr");
-            var expenseDetail = {};
-            regisId = row.find("td").eq(1).text();
-            expenseDetail.regisId = row.find("td").eq(1).text();
-            expenseDetail.invoiceId = invoiceNum;
-            expenseDetail.itemId = $(this).attr("id");
-            expenseDetail.itemName = row.find("td").eq(2).text();
-            expenseDetail.itemPrice = row.find("td").eq(3).text();
-            expenseDetail.num = row.find("td").eq(4).text();
-            expenseDetail.itemType = 1;
-            expenseDetail.payTime = new Date();
-            expenseDetail.tollBy = tollBy;
-            expenseDetailList.push(expenseDetail);
-            prescItemList.push($(this).val());
+            prescItemIdList.push($(this).val());
         });
 
         $.ajax({
             type: "POST",
-            url: "/openInvoice",
+            url: "/updatePrescItemStateToDispensing",
             async: false,
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: JSON.stringify({invoiceNum: invoiceNum, amount: $('#receivables').val(),
-                state: 0, time: new Date(), regisId: regisId,
-                tollBy: tollBy}),
+            data: JSON.stringify(prescItemIdList),
             success: function (data) {
                 if(data.success){
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/addExpenseDetail",
-                        async: false,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: JSON.stringify(expenseDetailList),
-                        success: function (data) {
-                            if(data.success){
-                            }
-                        }
-                    });
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/updatePrescItemState",
-                        async: false,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        data: JSON.stringify(prescItemList),
-                        success: function (data) {
-                            if(data.success){
-                            }
-                        }
-                    });
-
-                    //清空模态框数据
-                    $("#chargeModal").modal('hide');
-                    $('#invoiceNum').val("");
-                    $('#received').val("");
-                    $('#tollBy').val("");
-                    $('#receivables').val("");
-                    $('#medRecNum').val("");
-                    $('#patientName').val("");
-                    $('#change').val("");
-                    layer.msg('交费成功',{icon:1,time:1250});
-                    //重绘表格
-                    searchExpenseList();
-
+                    layer.msg('发药成功',{icon:1,time:1250});
+                    searchDispensingList();
                 }else{
                     layer.msg(data.error,{icon:2,time:1250});
                 }

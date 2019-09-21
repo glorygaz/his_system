@@ -28,6 +28,7 @@ public class MedicalRecordController {
         model.addAttribute("patientPersonalDone", registrationService.getPatientPersonalDone(user.getId()));
         model.addAttribute("patientDeptUndo", registrationService.getPatientDeptUndo(user.getDepartmentId()));
         model.addAttribute("patientDeptDone", registrationService.getPatientDeptDone(user.getDepartmentId()));
+        model.addAttribute("UserId", user.getId());
         return "medical-record-outframe";
     }
 

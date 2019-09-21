@@ -44,7 +44,7 @@
     </div>
     <br/>
     <div class="row cl">
-        <label class="form-label col-xs-3 col-sm-3" style="font-weight: bold">患者挂号信息确认</label>
+        <label class="form-label col-xs-3 col-sm-3" style="font-weight: bold">患者信息确认</label>
         <label class="form-label col-xs-9 col-sm-9"></label>
     </div>
     <div class="row cl">
@@ -82,18 +82,6 @@
             </tr>
             </thead>
             <tbody id="tbody">
-            <%--            <tr class="text-c">--%>
-            <%--                <td>挂号ID</td>--%>
-            <%--                <td>挂号级别</td>--%>
-            <%--                <td>挂号医生</td>--%>
-            <%--                <td>挂号时间</td>--%>
-            <%--                <td>上午</td>--%>
-            <%--                <td>功能神经外科</td>--%>
-            <%--                <td class="td-status"><span class="label label-success radius">已挂号</span></td>--%>
-            <%--                <td class="f-14 td-manage">--%>
-            <%--                    <button class="btn btn-primary radius" type="button" onClick="cancel_regis(this,'10001')" id=" "><i class="Hui-iconfont">&#xe6e2;</i>   退号</button>--%>
-            <%--                </td>--%>
-            <%--            </tr>--%>
             </tbody>
         </table>
     </div>
@@ -195,6 +183,10 @@
             dataType: "JSON",
             success: function (data) {
                 if(data.success){
+                    if(data.data[0] == null){
+                        table.draw();
+                        return;
+                    }
                     $("#searchedMedRecId").val(medRecId);
                     $("#name").val(data.data[0].name);
                     $("#idNum").val(data.data[0].idNum);
@@ -267,6 +259,7 @@
     function charge() {
         var tollBy = $('#tollBy').val();
         var received = $('#received').val();
+        var receivables = $('#receivables').val();
         var invoiceNum = $('#invoiceNum').val();
         if(tollBy == ""){
             layer.msg("请选择支付方式",{icon:2,time:1250});
@@ -278,6 +271,10 @@
         }
         if(invoiceNum == ""){
             layer.msg("请输入发票号",{icon:2,time:1250});
+            return;
+        }
+        if(received - receivables < 0){
+            layer.msg("实收金额不能小于应收金额",{icon:2,time:1250});
             return;
         }
         var expenseDetailList = [];
@@ -308,7 +305,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: JSON.stringify({invoiceNum: invoiceNum, amount: $('#receivables').val(),
+            data: JSON.stringify({invoiceNum: invoiceNum, amount: receivables,
                 state: 0, time: new Date(), regisId: regisId,
                 tollBy: tollBy}),
             success: function (data) {
